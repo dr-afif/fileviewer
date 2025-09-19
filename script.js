@@ -54,7 +54,7 @@ async function listFiles(folderId) {
 
       if (file.mimeType === "application/vnd.google-apps.folder") {
         div.innerHTML = `
-          <div class="folder-icon">📁</div>
+          <div class="folder-thumb">📁</div>
           <div class="file-name">${file.name}</div>
         `;
         div.onclick = () => enterFolder(file);
@@ -62,8 +62,14 @@ async function listFiles(folderId) {
         const thumb = file.thumbnailLink
           ? `<img src="${file.thumbnailLink}" alt="thumb" class="file-thumb" />`
           : `<div class="file-icon">📄</div>`;
+
+        div.innerHTML = `
+          ${thumb}
+          <div class="file-name">${file.name}</div>
+        `;
         div.onclick = () => openViewer(file);
       }
+
       fileList.appendChild(div);
     });
 
