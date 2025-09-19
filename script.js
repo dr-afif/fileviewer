@@ -37,7 +37,7 @@ async function listFiles(folderId) {
       q: `'${folderId}' in parents and trashed=false`,
       orderBy: "folder,name",
       pageSize: 100,
-      fields: "files(id, name, mimeType, webViewLink, iconLink)"
+      fields: "files(id, name, mimeType, webViewLink, iconLink, thumbnailLink)"
     });
 
     const files = response.result.files;
@@ -59,11 +59,9 @@ async function listFiles(folderId) {
         `;
         div.onclick = () => enterFolder(file);
       } else {
-        const icon = file.mimeType.startsWith("image/") ? "🖼️" : "📄";
-        div.innerHTML = `
-          <div class="file-icon">${icon}</div>
-          <div class="file-name">${file.name}</div>
-        `;
+        const thumb = file.thumbnailLink
+          ? `<img src="${file.thumbnailLink}" alt="thumb" class="file-thumb" />`
+          : `<div class="file-icon">📄</div>`;
         div.onclick = () => openViewer(file);
       }
       fileList.appendChild(div);
