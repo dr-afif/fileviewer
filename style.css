@@ -14,18 +14,48 @@ header {
 h1 {
   margin: 0;
   font-size: 1.3rem;
+  padding-bottom: 1rem;
 }
 
+/* Target the existing breadcrumb container */
 #breadcrumb {
-  margin-top: .5rem;
-  font-size: 0.9rem;
-}
-#breadcrumb span {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 14px;
+  font-family: system-ui, sans-serif;
   cursor: pointer;
-  text-decoration: underline;
 }
-#breadcrumb span:hover {
-  color: #eee;
+
+/* Links inside breadcrumb */
+#breadcrumb a {
+  text-decoration: none;
+  color: #2563eb; /* blue-600 */
+  background: #f1f5f9; /* slate-100 */
+  padding: 4px 10px;
+  border-radius: 9999px; /* pill */
+  transition: all 0.2s ease;
+  
+}
+
+#breadcrumb a:hover {
+  background: #e0e7ff; /* indigo-100 */
+  color: #1e40af; /* indigo-800 */
+}
+
+/* Separator (›) */
+#breadcrumb span {
+  color: #94a3b8; /* slate-400 */
+  font-size: 16px;
+}
+
+/* Last item = current */
+#breadcrumb span:last-child {
+  font-weight: 600;
+  color: #0f172a; /* slate-900 */
+  background: #e2e8f0; /* slate-200 */
+  padding: 4px 10px;
+  border-radius: 9999px;
 }
 
 .grid {
