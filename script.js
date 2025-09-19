@@ -1,3 +1,5 @@
+console.log("✅ script.js loaded");
+
 // === CONFIG ===
 const API_KEY = "AIzaSyD31jjNmYQWOwOnkUHwJpucsU_HceUAJWw";       // Replace with restricted API key
 const ROOT_FOLDER_ID = "19hxtBDM7U6IRepoEZiOHVG2MK_erNdrk"; // Replace with your shared folder ID
