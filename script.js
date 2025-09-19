@@ -23,8 +23,17 @@ async function initializeGapiClient() {
     discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
   });
   console.log("👉 Drive API initialized");
+
+  // test call here
+  const res = await gapi.client.drive.files.list({
+    q: `'${ROOT_FOLDER_ID}' in parents and trashed=false`,
+    fields: "files(id, name)"
+  });
+  console.log("👉 API response:", res.result.files);
+
   listFiles(ROOT_FOLDER_ID);
 }
+
 
 
 async function listFiles(folderId) {
