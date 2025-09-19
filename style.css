@@ -1,0 +1,102 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f7f8fa;
+  color: #333;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #4285f4;
+  color: white;
+  padding: 10px 20px;
+}
+
+button {
+  background: white;
+  color: #4285f4;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 15px;
+  padding: 20px;
+}
+
+.file-card {
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.file-card:hover {
+  transform: translateY(-5px);
+}
+
+.file-icon {
+  font-size: 40px;
+  margin-bottom: 10px;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal.hidden {
+  display: none;
+}
+
+#file-viewer {
+  width: 80%;
+  height: 80%;
+  border-radius: 10px;
+  background: white;
+}
+
+#close-viewer {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  font-size: 40px;
+  color: white;
+  cursor: pointer;
+}
+
+
+#breadcrumb {
+  padding: 10px 20px;
+  background: #e9f0fb;
+  font-size: 14px;
+}
+
+#breadcrumb span {
+  color: #4285f4;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+#breadcrumb span:hover {
+  text-decoration: underline;
+}
+
+.folder-icon {
+  font-size: 40px;
+  color: #f4b400; /* yellow for folders */
+}

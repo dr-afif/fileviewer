@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Public Drive Viewer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>📂 Shared Drive Viewer</h1>
+  </header>
+
+  <nav id="breadcrumb"></nav>
+
+  <main>
+    <div id="file-list" class="grid"></div>
+  </main>
+
+  <!-- File Viewer Modal -->
+  <div id="viewer-modal" class="modal hidden">
+    <span id="close-viewer">&times;</span>
+    <iframe id="file-viewer" frameborder="0"></iframe>
+  </div>
+
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
