@@ -1,6 +1,6 @@
 // === CONFIG ===
 const API_KEY = "AIzaSyD31jjNmYQWOwOnkUHwJpucsU_HceUAJWw";       // Replace with restricted API key
-const ROOT_FOLDER_ID = "https://drive.google.com/drive/folders/19hxtBDM7U6IRepoEZiOHVG2MK_erNdrk?usp=sharing"; // Replace with your shared folder ID
+const ROOT_FOLDER_ID = "https://drive.google.com/drive/folders/19hxtBDM7U6IRepoEZiOHVG2MK_erNdrk"; // Replace with your shared folder ID
 
 // Elements
 const fileList = document.getElementById("file-list");
