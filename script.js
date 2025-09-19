@@ -1,8 +1,6 @@
-console.log("✅ script.js loaded");
-
 // === CONFIG ===
-const API_KEY = "AIzaSyD31jjNmYQWOwOnkUHwJpucsU_HceUAJWw";       // Replace with restricted API key
-const ROOT_FOLDER_ID = "19hxtBDM7U6IRepoEZiOHVG2MK_erNdrk"; // Replace with your shared folder ID
+const API_KEY = "AIzaSyD31jjNmYQWOwOnkUHwJpucsU_HceUAJWw";   // replace with your restricted key
+const ROOT_FOLDER_ID = "19hxtBDM7U6IRepoEZiOHVG2MK_erNdrk"; // your shared folder ID
 
 // Elements
 const fileList = document.getElementById("file-list");
@@ -15,76 +13,63 @@ let folderStack = [{ id: ROOT_FOLDER_ID, name: "Shared Folder" }];
 
 // Load Google API
 function gapiLoaded() {
+  console.log("✅ gapi script loaded");
   gapi.load("client", initializeGapiClient);
 }
 
 async function initializeGapiClient() {
-  console.log("👉 initializeGapiClient called");
   await gapi.client.init({
     apiKey: API_KEY,
     discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
   });
-  console.log("👉 Drive API initialized");
-
-  // test call here
-  const res = await gapi.client.drive.files.list({
-    q: `'${ROOT_FOLDER_ID}' in parents and trashed=false`,
-    fields: "files(id, name)"
-  });
-  console.log("👉 API response:", res.result.files);
-
   listFiles(ROOT_FOLDER_ID);
 }
-
-
 
 async function listFiles(folderId) {
   fileList.innerHTML = "Loading...";
 
-  let response;
   try {
-    response = await gapi.client.drive.files.list({
+    const response = await gapi.client.drive.files.list({
       q: `'${folderId}' in parents and trashed=false`,
       orderBy: "folder,name",
-      pageSize: 50,
-      fields: "files(id, name, mimeType, thumbnailLink, webViewLink)"
+      pageSize: 100,
+      fields: "files(id, name, mimeType, webViewLink, iconLink)"
     });
-  } catch (err) {
-    console.error(err.message);
-    fileList.innerHTML = "Error loading files.";
-    return;
-  }
 
-  const files = response.result.files;
-  fileList.innerHTML = "";
+    const files = response.result.files;
+    fileList.innerHTML = "";
 
-  if (!files || files.length === 0) {
-    fileList.innerHTML = "No files here.";
-    return;
-  }
-
-  files.forEach(file => {
-    const div = document.createElement("div");
-    div.className = "file-card";
-
-    if (file.mimeType === "application/vnd.google-apps.folder") {
-      div.innerHTML = `
-        <div class="folder-icon">📁</div>
-        <div class="file-name">${file.name}</div>
-      `;
-      div.onclick = () => enterFolder(file);
-    } else {
-      const icon = file.mimeType.startsWith("image/") ? "🖼️" : "📄";
-      div.innerHTML = `
-        <div class="file-icon">${icon}</div>
-        <div class="file-name">${file.name}</div>
-      `;
-      div.onclick = () => openViewer(file);
+    if (!files || files.length === 0) {
+      fileList.innerHTML = "No files here.";
+      return;
     }
-    fileList.appendChild(div);
-  });
 
-  updateBreadcrumb();
+    files.forEach(file => {
+      const div = document.createElement("div");
+      div.className = "file-card";
+
+      if (file.mimeType === "application/vnd.google-apps.folder") {
+        div.innerHTML = `
+          <div class="folder-icon">📁</div>
+          <div class="file-name">${file.name}</div>
+        `;
+        div.onclick = () => enterFolder(file);
+      } else {
+        const icon = file.mimeType.startsWith("image/") ? "🖼️" : "📄";
+        div.innerHTML = `
+          <div class="file-icon">${icon}</div>
+          <div class="file-name">${file.name}</div>
+        `;
+        div.onclick = () => openViewer(file);
+      }
+      fileList.appendChild(div);
+    });
+
+    updateBreadcrumb();
+  } catch (err) {
+    console.error(err);
+    fileList.innerHTML = "❌ Error loading files.";
+  }
 }
 
 function enterFolder(folder) {
@@ -103,7 +88,7 @@ function updateBreadcrumb() {
     };
     breadcrumb.appendChild(span);
     if (index < folderStack.length - 1) {
-      breadcrumb.append(" > ");
+      breadcrumb.append(" › ");
     }
   });
 }
@@ -113,7 +98,7 @@ function openViewer(file) {
   if (file.mimeType === "application/pdf") {
     viewer.src = `https://drive.google.com/file/d/${file.id}/preview`;
   } else if (file.mimeType.startsWith("image/")) {
-    viewer.src = file.webViewLink;
+    viewer.src = `https://drive.google.com/uc?id=${file.id}`;
   } else {
     viewer.src = file.webViewLink;
   }
@@ -123,11 +108,3 @@ closeViewer.onclick = () => {
   modal.classList.add("hidden");
   viewer.src = "";
 };
-
-// Initialize GAPI
-window.gapiLoaded = gapiLoaded;
-
-function gapiLoaded() {
-  console.log("👉 gapiLoaded called");
-  gapi.load("client", initializeGapiClient);
-}
