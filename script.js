@@ -112,3 +112,8 @@ closeViewer.onclick = () => {
 
 // Initialize GAPI
 window.gapiLoaded = gapiLoaded;
+
+function gapiLoaded() {
+  console.log("👉 gapiLoaded called");
+  gapi.load("client", initializeGapiClient);
+}
