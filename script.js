@@ -11,17 +11,21 @@ const breadcrumb = document.getElementById("breadcrumb");
 
 let folderStack = [{ id: ROOT_FOLDER_ID, name: "Shared Folder" }];
 
-// Load Google API
-function gapiLoaded() {
-  console.log("✅ gapi script loaded");
+console.log("✅ script.js loaded");
+
+// make gapiLoaded a property of window so onload can call it
+window.gapiLoaded = function() {
+  console.log("👉 gapiLoaded called");
   gapi.load("client", initializeGapiClient);
-}
+};
 
 async function initializeGapiClient() {
+  console.log("👉 initializeGapiClient called");
   await gapi.client.init({
     apiKey: API_KEY,
     discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
   });
+  console.log("👉 Drive API ready");
   listFiles(ROOT_FOLDER_ID);
 }
 
