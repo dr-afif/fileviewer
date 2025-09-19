@@ -17,12 +17,15 @@ function gapiLoaded() {
 }
 
 async function initializeGapiClient() {
+  console.log("👉 initializeGapiClient called");
   await gapi.client.init({
     apiKey: API_KEY,
     discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"],
   });
+  console.log("👉 Drive API initialized");
   listFiles(ROOT_FOLDER_ID);
 }
+
 
 async function listFiles(folderId) {
   fileList.innerHTML = "Loading...";
